@@ -1,12 +1,10 @@
 # ECE 6780 - Embedded Systems Design
 
-Welcome to ECE 6780 - Embedded Systems Design. This course is an intensive exploration of the principles and practices that underpin modern embedded systems. It is designed to equip students with the knowledge and skills necessary to design, build, and program embedded systems, with a particular focus on ARM Cortex-M0 processors and related hardware.
+This course is an intensive exploration of the principles and practices that underpin modern embedded systems. It is designed to equip students with the knowledge and skills necessary to design, build, and program embedded systems, with a particular focus on ARM Cortex-M0 processors and related hardware.
 
 ## Course Description
 
 This class offers a comprehensive look at computer architecture beyond the CPU, delving into the hardware/software interface, techniques for sensing and controlling the physical world, and other critical areas. The course is divided into lecture sessions, where theoretical foundations are laid, and lab sessions, where these theories are applied to real-world scenarios using ARM Cortex-M0 and other supporting hardware.
-
-The first half of the course will cover essential topics through lab sessions, preparing students for a mini-project that embodies the course's learning objectives. Expect a lab-intensive experience with a heavy workload, aimed at providing hands-on experience in embedded systems design.
 
 ## Learning Outcomes
 
