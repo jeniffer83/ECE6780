@@ -21,7 +21,3 @@ By the end of this course, students will be proficient in:
 - **Cyber-Physical Systems Modeling:** Learning state-of-the-art techniques for modeling cyber-physical systems.
 - **Real-Time Operating Systems:** Understanding the mechanics and implementation of real-time operating systems.
 - **Project Implementation:** Executing a complete embedded system project from specifications to final testing.
-
-## Coursework and Projects
-
-The coursework is designed to be hands-on and intensive, with a significant portion of time dedicated to lab work and project development. Students are expected to engage with all aspects of embedded system design, from theoretical underpinnings to practical implementation and testing.
