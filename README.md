@@ -4,7 +4,6 @@ This course is an intensive exploration of the principles and practices that und
 
 ## Course Description
 
-This class offers a comprehensive look at computer architecture beyond the CPU, delving into the hardware/software interface, techniques for sensing and controlling the physical world, and other critical areas. The course is divided into lecture sessions, where theoretical foundations are laid, and lab sessions, where these theories are applied to real-world scenarios using ARM Cortex-M0 and other supporting hardware.
 
 ## Learning Outcomes
 
