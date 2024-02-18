@@ -25,19 +25,3 @@ By the end of this course, students will be proficient in:
 ## Coursework and Projects
 
 The coursework is designed to be hands-on and intensive, with a significant portion of time dedicated to lab work and project development. Students are expected to engage with all aspects of embedded system design, from theoretical underpinnings to practical implementation and testing.
-
-## Prerequisites
-
-Familiarity with C programming and basic electronics is recommended. Prior experience with microcontrollers, while not required, will be beneficial.
-
-## Materials and Tools
-
-Details on required materials and tools, including specific hardware and software requirements, will be provided at the beginning of the course.
-
-## Expectations
-
-Students are expected to commit a substantial amount of time to lab work and project development. Active participation in all course components is crucial for success.
-
----
-
-This course promises to be a challenging yet rewarding journey into the world of embedded systems design. We look forward to exploring this dynamic field together.
