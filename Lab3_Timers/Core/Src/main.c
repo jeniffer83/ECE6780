@@ -34,11 +34,11 @@ int main(void)
 
   /* Configure the system clock */
   SystemClock_Config();
-  
-	/* 3.1 — Using Timer Interrupts. */
-	// Enable the timer 2 peripheral (TIM2) in the RCC
+
+  /* 3.1 — Using Timer Interrupts. */
+  // Enable the timer 2 peripheral (TIM2) in the RCC
   RCC->APB1ENR |= RCC_APB1ENR_TIM2EN;
-	// Enable GPIOC in the RCC
+  // Enable GPIOC in the RCC
   RCC->AHBENR |= RCC_AHBENR_GPIOCEN;
   // Configure the timer to trigger an update event (UEV) at 4 Hz
   TIM2->PSC = 7999;
@@ -49,8 +49,8 @@ int main(void)
   TIM2->CR1 |= TIM_CR1_CEN;
   // Set up the timer’s interrupt handler, and enable in the NVIC.
   NVIC_EnableIRQ(TIM2_IRQn);
-	
-	/* Toggle between the green (PC8) and orange (PC9) LEDs in the interrupt handler. */
+
+  /* Toggle between the green (PC8) and orange (PC9) LEDs in the interrupt handler. */
   // Reset the mode of PC8, PC9 to input
   GPIOC->MODER &= ~(GPIO_MODER_MODER8 | GPIO_MODER_MODER9);
   // Configure PC8, PC9 as an output
@@ -61,19 +61,19 @@ int main(void)
   GPIOC->OSPEEDR |= GPIO_OSPEEDR_OSPEEDR8 | GPIO_OSPEEDR_OSPEEDR9;
   // Set the pull-up/down of PC8, PC9 to none
   GPIOC->PUPDR &= ~(GPIO_PUPDR_PUPDR8 | GPIO_PUPDR_PUPDR9);
-	
-	// Set PC9 to high
-	GPIOC->ODR |= GPIO_ODR_9;
-	
-	/* 3.2 — Configuring Timer Channels to PWM Mode. */
-	// Enable the timer 3 peripheral (TIM3) in the RCC.
-	RCC->APB1ENR |= RCC_APB1ENR_TIM3EN;
-	// Configure the timer to trigger an update event (UEV) at 800 Hz
-	TIM3->PSC = 79;
+
+  // Set PC9 to high
+  GPIOC->ODR |= GPIO_ODR_9;
+
+  /* 3.2 — Configuring Timer Channels to PWM Mode. */
+  // Enable the timer 3 peripheral (TIM3) in the RCC.
+  RCC->APB1ENR |= RCC_APB1ENR_TIM3EN;
+  // Configure the timer to trigger an update event (UEV) at 800 Hz
+  TIM3->PSC = 79;
   TIM3->ARR = 125;
-	// Configure and enable/start the timer
+  // Configure and enable/start the timer
   TIM3->CR1 |= TIM_CR1_CEN;
-	// Set CC1S to 00 as CC1 channel is configured as output
+  // Set CC1S to 00 as CC1 channel is configured as output
   TIM3->CCMR1 &= ~TIM_CCMR1_CC1S_0;
   TIM3->CCMR1 &= ~TIM_CCMR1_CC1S_1;
   // Set CC2S to 00 as CC2 channel is configured as output
@@ -91,13 +91,13 @@ int main(void)
   // Set the capture/compare registers (CCRx) for both channels to 20% of your ARR value.
   TIM3->CCR1 = 25; // 125 * 20
   TIM3->CCR2 = 25; // 125 * 20
-	
-	/* 3.3 — Configuring Pin Alternate Functions. */
-	// Set up PC6 and PC7 as alternate function mode 10
+
+  /* 3.3 — Configuring Pin Alternate Functions. */
+  // Set up PC6 and PC7 as alternate function mode 10
   GPIOC->MODER &= ~(GPIO_MODER_MODER6 | GPIO_MODER_MODER7);
   GPIOC->MODER |= GPIO_MODER_MODER6_1 | GPIO_MODER_MODER7_1;
   // Configure all LEDs as push-pull output type
-  GPIOC->OTYPER &= ~(GPIO_OTYPER_OT_6 | GPIO_OTYPER_OT_7 );
+  GPIOC->OTYPER &= ~(GPIO_OTYPER_OT_6 | GPIO_OTYPER_OT_7);
   // Configure all LEDs to low speed
   GPIOC->OSPEEDR &= ~(GPIO_OSPEEDR_OSPEEDR6_Msk | GPIO_OSPEEDR_OSPEEDR7_Msk);
   // Configure all LEDs with no pull-up/down resistors
@@ -105,7 +105,6 @@ int main(void)
 
   while (1)
   {
-
   }
 }
 
@@ -113,9 +112,8 @@ void TIM2_IRQHandler(void)
 {
   // Clear the interrupt pending bit
   TIM2->SR &= ~TIM_SR_UIF;
-	
-	GPIOC->ODR ^=(GPIO_ODR_8 | GPIO_ODR_9);
 
+  GPIOC->ODR ^= (GPIO_ODR_8 | GPIO_ODR_9);
 }
 /**
  * @brief System Clock Configuration
