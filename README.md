@@ -1,20 +1,15 @@
 # ECE 6780 - Embedded Systems Design
 
-This course is an intensive exploration of the principles and practices that underpin modern embedded systems. It is designed to equip students with the knowledge and skills necessary to design, build, and program embedded systems, with a particular focus on ARM Cortex-M0 processors and related hardware.
-
 ## Course Description
-
+This class focuses on modern embedded systems design. It will focus on computer architecture, fundamentals of hardware/software interface, and techniques for sensing and controlling the physical world. The labs will focus on the ARM Cortex-MO and others supporting hardware to learn how to design, build, and program embedded systems.
 
 ## Learning Outcomes
-
-By the end of this course, students will be proficient in:
-
-- **Designing Printed-Circuit Boards (PCBs):** From schematic design to manufacturing, using both through-holes and surface-mount devices.
-- **Understanding ARM Cortex Processors:** Gaining insights into assembly, core architecture, and memory systems.
-- **Writing Firmware:** Developing software in C for ARM Cortex-M0-based systems.
-- **Utilizing Micro-controller Peripherals:** Working with GPIOs, Interrupt managers, Timers, and more.
-- **Implementing Communication Protocols:** Using UART, I2C, SPI, among others.
-- **Interfacing with Sensors and Actuators:** Through analog-to-digital and digital-to-analog peripherals.
-- **Cyber-Physical Systems Modeling:** Learning state-of-the-art techniques for modeling cyber-physical systems.
-- **Real-Time Operating Systems:** Understanding the mechanics and implementation of real-time operating systems.
-- **Project Implementation:** Executing a complete embedded system project from specifications to final testing.
+1. Be able to design a PCB (printed circuit board) using through-holes and surface mounts.
+2. Understand the basics of ARM Cortex processors.
+3. Be able to write firmware (in C) for ARM Cortex-MO based embedded systems.
+4. Utilize a basic set of microcontrollers peripherals.
+5. Use multiple communication protocols.
+6. Interface microcontrollers with sensors and actuators using analog-to-digital peripherals and vice versa.
+7. Understand new cyber-physical systems and modeling techniques.
+8. Learn mechanics of real-time operating systems.
+9. Create a complete embedded systems based on specifications for a final testing through a project. 
