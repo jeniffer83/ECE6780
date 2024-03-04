@@ -41,16 +41,16 @@ int main(void)
 {
 	/* Reset of all peripherals, Initializes the Flash interface and the Systick. */
 	HAL_Init();
-	
+
 	/* Configure the system clock */
 	SystemClock_Config();
-	
+
 	// Enable the USART clock in the RCC
 	RCC->APB1ENR |= RCC_APB1ENR_USART3EN;
 
 	// Enable the GPIOB clock in the RCC
 	RCC->AHBENR |= RCC_AHBENR_GPIOBEN;
-	
+
 	// Enable the GPIOC clock in the RCC
 	RCC->AHBENR |= RCC_AHBENR_GPIOCEN;
 
