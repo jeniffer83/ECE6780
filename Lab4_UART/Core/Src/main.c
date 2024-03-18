@@ -69,7 +69,7 @@ int main(void)
 
 	// Initialize the LEDs
 	GPIOC->MODER |= (1 << 12) | (1 << 18) | (1 << 14) | (1 << 16); // Configure bits 12 and 18 as general-purpose output to control green and red LEDs.
-	GPIOC->MODER &= ~(1 << 13);	// Clear bits 15 and 13 for general-purpose output mode.
+	GPIOC->MODER &= ~(1 << 13);									   // Clear bits 15 and 13 for general-purpose output mode.
 	GPIOC->MODER &= ~(1 << 19);
 	GPIOC->MODER &= ~(1 << 15);
 	GPIOC->MODER &= ~(1 << 17);
