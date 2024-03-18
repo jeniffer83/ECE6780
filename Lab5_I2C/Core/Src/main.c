@@ -191,6 +191,10 @@ int main(void)
 	// All other bits in the CTRL_REG1 register should be set to 0. These place the device in the
 	// default low-speed mode
 	I2C2->CR2 |= I2C_CR2_START;
+	
+	/* 5.6 Exercise Specifications */
+	// Initialize the L3GD20 gyroscope sensor to read the X and Y axes
+	
 }
 
 /**
