@@ -19,6 +19,12 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "stm32f072xb.h"
+#include "stdlib.h"
+
+int32_t ReadX();
+int32_t ReadY();
+void _Error_Handler(char *file, int line);
+void Write(volatile uint32_t addr);
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -125,61 +131,61 @@ int main(void)
 	RCC->APB1ENR |= RCC_APB1ENR_I2C2EN;
 
 	// Set the parameters in the TIMINGR register to use 100kHz standard-mode I2C.
-	I2C2->TIMINGR = 0x00201D2B;
+	I2C2->TIMINGR |= (1 << 28) | 0x13 | (0xF << 8) | (0x2 << 16) | (0x4 << 20);
 
 	// Enable the I2C peripheral using the PE bit in the CR1 register.
 	I2C2->CR1 |= I2C_CR1_PE;
 
 	/* 5.4 Reading the Register */
 	// Set the transaction parameters in the CR2 register.
-	I2C2->CR2 &= ~((0x7F << 16) | (0x3FF << 0));
+	// I2C2->CR2 &= ~((0x7F << 16) | (0x3FF << 0));
 
 	// Set the number of bytes to transmit=1.
-	I2C2->CR2 |= (1 << 16) | (0x69 << 1);
+	// I2C2->CR2 |= (1 << 16) | (0x69 << 1);
 
 	// Set the RD_WRN bit to indicate a write operation.
-	I2C2->CR2 &= ~(I2C_CR2_RD_WRN);
+	// I2C2->CR2 &= ~(I2C_CR2_RD_WRN);
 
 	// Set the START bit
-	I2C2->CR2 |= I2C_CR2_START;
+	// I2C2->CR2 |= I2C_CR2_START;
 
 	// Wait until either of the TXIS (Transmit Register Empty/Ready) or NACKF (Slave Not
 	// Acknowledge) flags a reset.
-	while (!(I2C2->ISR & I2C_ISR_TXIS))
-		;
-	if (I2C2->ISR & I2C_ISR_NACKF)
-		HAL_GPIO_WritePin(GPIOC, GPIO_PIN_6, GPIO_PIN_SET);
+	// while (!(I2C2->ISR & I2C_ISR_TXIS))
+	//	;
+	// if (I2C2->ISR & I2C_ISR_NACKF)
+	//	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_6, GPIO_PIN_SET);
 	// Write the address of the “WHO_AM_I” register into the I2C transmit register. (TXDR)
-	I2C2->TXDR |= 0x0F;
-	while (!(I2C2->ISR & I2C_ISR_TC))
-		; /* loop waiting for TC */
+	// I2C2->TXDR |= 0x0F;
+	// while (!(I2C2->ISR & I2C_ISR_TC))
+	//	; /* loop waiting for TC */
 	// Reload the CR2 register with the same parameters as before
-	I2C2->CR2 &= ~((0x7F << 16) | (0x3FF << 0));
-	I2C2->CR2 |= (1 << 16) | (0x69 << 1);
+	// I2C2->CR2 &= ~((0x7F << 16) | (0x3FF << 0));
+	// I2C2->CR2 |= (1 << 16) | (0x69 << 1);
 
 	// Set the RD_WRN bit to indicate a read operation
-	I2C2->CR2 |= I2C_CR2_RD_WRN;
+	// I2C2->CR2 |= I2C_CR2_RD_WRN;
 
 	// Set the START bit again to perform a I2C restart condition
-	I2C2->CR2 |= I2C_CR2_START;
+	// I2C2->CR2 |= I2C_CR2_START;
 
 	// Wait until either of the RXNE (Receive Register Not Empty) or NACKF (Slave Not
 	// Acknowledge) flags a reset
-	while (!(I2C2->ISR & I2C_ISR_RXNE))
-		;
+	// while (!(I2C2->ISR & I2C_ISR_RXNE))
+	//	;
 	// Wait until the TC (Transfer Complete) flag is set.
-	if (I2C2->ISR & I2C_ISR_NACKF)
-		HAL_GPIO_WritePin(GPIOC, GPIO_PIN_6, GPIO_PIN_SET);
-	while (!(I2C2->ISR & I2C_ISR_TC))
-		; /* loop waiting for TC */
+	// if (I2C2->ISR & I2C_ISR_NACKF)
+	//	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_6, GPIO_PIN_SET);
+	// while (!(I2C2->ISR & I2C_ISR_TC))
+	//	; /* loop waiting for TC */
 
 	// Check the contents of the RXDR register to see if it matches 0xD3. (expected value of the
 	// “WHO_AM_I” register)
-	if (I2C2->RXDR == 0xD3)
-		HAL_GPIO_WritePin(GPIOC, GPIO_PIN_7, GPIO_PIN_SET);
+	// if (I2C2->RXDR == 0xD3)
+	//	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_7, GPIO_PIN_SET);
 
 	// Set the STOP bit in the CR2 register to release the I2C bus
-	I2C2->CR2 |= I2C_CR2_STOP;
+	// I2C2->CR2 |= I2C_CR2_STOP;
 
 	/* 5.5 Initializing the Gyroscope */
 	// Enable the X and Y sensing axes in the CTRL_REG1 register
@@ -191,16 +197,156 @@ int main(void)
 	// All other bits in the CTRL_REG1 register should be set to 0. These place the device in the
 	// default low-speed mode
 	I2C2->CR2 |= I2C_CR2_START;
-	
+
 	/* 5.6 Exercise Specifications */
+	// Wait until either of the TXIS (Transmit Register Empty/Ready) or NACKF (Slave Not
+	// Acknowledge) flags a reset.
+	while (!(I2C2->ISR & I2C_ISR_TXIS))
+		;
+	if (I2C2->ISR & I2C_ISR_NACKF)
+		HAL_GPIO_WritePin(GPIOC, GPIO_PIN_6, GPIO_PIN_SET); // Error State
+	// Write CTRL_REG1 into I2C transmit register
+	I2C2->TXDR |= 0x20;
+
+	// Wait until either of the TXIS (Transmit Register Empty/Ready) or NACKF (Slave Not
+	// Acknowledge) flags a reset.
+	while (!(I2C2->ISR & I2C_ISR_TXIS))
+		;
+	if (I2C2->ISR & I2C_ISR_NACKF)
+		HAL_GPIO_WritePin(GPIOC, GPIO_PIN_6, GPIO_PIN_SET);
+	// Write the address of the “WHO_AM_I” register into the I2C transmit register. (TXDR)
+	I2C2->TXDR |= 0xB;
+	while (!(I2C2->ISR & I2C_ISR_TC))
+		; /* loop waiting for TC */
+
 	// Initialize the L3GD20 gyroscope sensor to read the X and Y axes
-	
+	int x_axes, y_axes;
+	while (1)
+	{
+		x_axes = ReadX(); // Read and write
+		y_axes = ReadY(); // Read and write
+
+		int16_t threshold = 0x01FF; // This will turn LED on
+
+		if (abs(x_axes) > threshold | abs(y_axes) > threshold)
+		{
+			if (abs(x_axes) > abs(y_axes))
+			{
+				HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, (x_axes > threshold) ? GPIO_PIN_SET : GPIO_PIN_RESET);	 // Positive X
+				HAL_GPIO_WritePin(GPIOC, GPIO_PIN_9, (x_axes < -threshold) ? GPIO_PIN_SET : GPIO_PIN_RESET); // Negative X
+			}
+			else
+			{
+				HAL_GPIO_WritePin(GPIOC, GPIO_PIN_6, (y_axes > threshold) ? GPIO_PIN_SET : GPIO_PIN_RESET);	 // Positive Y
+				HAL_GPIO_WritePin(GPIOC, GPIO_PIN_7, (y_axes < -threshold) ? GPIO_PIN_SET : GPIO_PIN_RESET); // Negative Y
+			}
+		}
+
+		HAL_Delay(100);
+	}
 }
 
 /**
  * @brief System Clock Configuration
  * @retval None
  */
+
+void Write(volatile uint32_t addr)
+{
+	// Set the transaction parameters in the CR2 register
+	I2C2->CR2 &= ~((0x7F << 16) | (0x3FF << 0));
+
+	// Set the number of bytes to transmit=1.
+	I2C2->CR2 |= (1 << 16) | (0x69 << 1);
+
+	// Set the RD_WRN bit to indicate a write operation
+	I2C2->CR2 &= ~(I2C_CR2_RD_WRN);
+
+	// Set the START bit
+	I2C2->CR2 |= I2C_CR2_START;
+
+	// Wait until either of the TXIS (Transmit Register Empty/Ready) or NACKF (Slave Not
+	// Acknowledge) flags a reset.
+	while (!(I2C2->ISR & I2C_ISR_TXIS))
+		;
+	if (I2C2->ISR & I2C_ISR_NACKF)
+		HAL_GPIO_WritePin(GPIOC, GPIO_PIN_6, GPIO_PIN_SET);
+	// write CTRL_REG1 into I2C transmit register
+	I2C2->TXDR |= addr;
+	while (!(I2C2->ISR & I2C_ISR_TC))
+		; /* loop waiting for TC */
+		  // Set the STOP bit in the CR2 register to release the I2C bus
+	I2C2->CR2 |= I2C_CR2_STOP;
+}
+
+int32_t ReadX()
+{
+	int16_t x_axis;
+	Write(0xA8);
+
+	// Enable the X and Y sensing axes in the CTRL_REG1 register
+	I2C2->CR2 &= ~((0x7F << 16) | (0x3FF << 0));
+
+	// Set the sensor in to “normal or sleep mode” using the PD bit in the CTRL_REG1 register
+	I2C2->CR2 |= (2 << 16) | (0x69 << 1);
+
+	// Set the RD_WRN bit to indicate a read operation// reset RD_WRN to read
+	I2C2->CR2 |= I2C_CR2_RD_WRN;
+
+	// Set the START bit
+	I2C2->CR2 |= I2C_CR2_START;
+
+	// Wait until either of the RXNE (Receive Register Not Empty) or NACKF (Slave Not
+	// Acknowledge) flags a reset
+	while (!(I2C2->ISR & I2C_ISR_RXNE))
+		;
+	if (I2C2->ISR & I2C_ISR_NACKF)
+		HAL_GPIO_WritePin(GPIOC, GPIO_PIN_6, GPIO_PIN_SET);
+	x_axis = I2C2->RXDR;
+	while (!(I2C2->ISR & I2C_ISR_RXNE))
+		;
+	if (I2C2->ISR & I2C_ISR_NACKF)
+		HAL_GPIO_WritePin(GPIOC, GPIO_PIN_6, GPIO_PIN_SET);
+	x_axis |= (I2C2->RXDR << 8);
+	while (!(I2C2->ISR & I2C_ISR_TC))
+		; /* loop waiting for TC */
+	return x_axis;
+}
+
+int32_t ReadY()
+{
+	int16_t y_axis;
+	Write(0xAA);
+
+	// Reload the CR2 register with the same parameters as before
+	I2C2->CR2 &= ~((0x7F << 16) | (0x3FF << 0));
+
+	// Set the sensor in to “normal or sleep mode” using the PD bit in the CTRL_REG1 register
+	I2C2->CR2 |= (2 << 16) | (0x69 << 1);
+
+	// Set the RD_WRN bit to indicate a write operation.
+	I2C2->CR2 |= I2C_CR2_RD_WRN;
+
+	// Set the START bit again to perform a I2C restart condition
+	I2C2->CR2 |= I2C_CR2_START;
+
+	// Wait until either of the RXNE (Receive Register Not Empty) or NACKF (Slave Not
+	// Acknowledge) flags a reset
+	while (!(I2C2->ISR & I2C_ISR_RXNE))
+		;
+	if (I2C2->ISR & I2C_ISR_NACKF)
+		HAL_GPIO_WritePin(GPIOC, GPIO_PIN_6, GPIO_PIN_SET);
+	y_axis = I2C2->RXDR;
+	while (!(I2C2->ISR & I2C_ISR_RXNE))
+		;
+	if (I2C2->ISR & I2C_ISR_NACKF)
+		HAL_GPIO_WritePin(GPIOC, GPIO_PIN_6, GPIO_PIN_SET);
+	y_axis |= (I2C2->RXDR << 8);
+	while (!(I2C2->ISR & I2C_ISR_TC))
+		; /* loop waiting for TC */
+	return y_axis;
+}
+
 void SystemClock_Config(void)
 {
 	RCC_OscInitTypeDef RCC_OscInitStruct = {0};
