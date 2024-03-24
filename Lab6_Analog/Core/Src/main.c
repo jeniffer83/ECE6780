@@ -49,7 +49,7 @@
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 void _Error_Handler(char *file, int line);
-
+ 
 /* USER CODE BEGIN PFP */
 // Sine Wave: 8-bit, 32 samples/cycle
 const uint8_t sine_table[32] = {127, 151, 175, 197, 216, 232, 244, 251, 254, 251, 244,
